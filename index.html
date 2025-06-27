@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fancy Date Display</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      font-family: 'Montserrat', sans-serif;
+      color: white;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+      animation: fadeIn 1.5s ease-out;
+    }
+    h1 {
+      margin: 0 0 20px;
+      font-size: 48px;
+      font-weight: 700;
+    }
+    p {
+      font-size: 24px;
+      margin: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculated Date</h1>
+    <p id="date"></p>
+  </div>
+
+  <script>
+    (function(){
+      // Reference start date: June 24, 2025
+      const startDate = new Date('2025-06-24T00:00:00');
+
+      // Get today's date (local time)
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      // Calculate days between today and start date
+      const msInDay = 24 * 60 * 60 * 1000;
+      const daysSince = Math.floor((today - startDate) / msInDay);
+
+      // Compute total days offset
+      const totalDays = daysSince * 7 + 6;
+
+      // Calculate new target date
+      const newDate = new Date(startDate.getTime() + totalDays * msInDay);
+
+      // Format the date nicely
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      const displayDate = newDate.toLocaleDateString(undefined, options);
+
+      // Inject into the page
+      document.getElementById('date').textContent = displayDate;
+    })();
+  </script>
+</body>
+</html>
